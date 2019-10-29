@@ -1,4 +1,4 @@
-package com.example.programme_tv_multisport
+package com.galich.programme_tv_multisport
 
 import android.os.Bundle
 
