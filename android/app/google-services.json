@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "493282358241",
+    "firebase_url": "https://programme-tv-multisport.firebaseio.com",
+    "project_id": "programme-tv-multisport",
+    "storage_bucket": "programme-tv-multisport.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493282358241:android:e51a3551bc193eeb6c58a0",
+        "android_client_info": {
+          "package_name": "com.galich.programme_tv_multisport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493282358241-pue9kai5av4ugn7cps71br51ijd1guee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUFHXhU8G5NMiPeagR4tH-zySkiD1V2Cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493282358241-pue9kai5av4ugn7cps71br51ijd1guee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
