@@ -5,7 +5,7 @@ import './firestore_provider.dart';
 class Repository {
   final _firestoreProvider = FirestoreProvider();
 
-  Future<List<Channel>> channelLis() => _firestoreProvider.channelList();
+  Future<List<Channel>> channelList() => _firestoreProvider.channelList();
 
-  Future<List<Sport>> sportLis() => _firestoreProvider.sportList();
+  Future<List<Sport>> sportList() => _firestoreProvider.sportList();
 }
