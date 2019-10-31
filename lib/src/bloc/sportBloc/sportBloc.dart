@@ -22,5 +22,11 @@ class SportBloc extends Bloc<SportEvent, SportState> {
         yield SportListError();
       }
     }
+    if (event is SelectSport) {
+      final updatedSportList = (state as SportListLoaded).sportList.map((sport) {
+        return sport.id == event.sportId ? sport.toIsSelected(true) : sport.toIsSelected(false);
+      }).toList();
+      yield SportListLoaded(sportList: updatedSportList);
+    }
   }
 }
