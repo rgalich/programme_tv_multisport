@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
-import 'package:programme_tv_multisport/src/widgets/appBarHome.dart';
+import 'package:programme_tv_multisport/src/widgets/widgets.dart';
 
 void main() {
   runApp(
@@ -24,23 +24,7 @@ class App extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBarHome(),
-        drawer: Drawer(
-          child: BlocBuilder(
-              bloc: _sportBloc,
-              builder: (BuildContext context, SportState state) {
-                if (state is SportListEmply) {
-                  return Text("Empty");
-                }
-                if (state is SportListLoaded) {
-                  return ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(state.sportList[index].libelle);
-                    },
-                    itemCount: state.sportList.length,
-                  );
-                }
-              }),
-        ),
+        drawer: DrawerHome()
       ),
     );
   }
