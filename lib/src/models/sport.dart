@@ -4,18 +4,17 @@ class Sport extends Equatable {
   final String id;
   final String logo;
   final String libelle;
-  final bool isSelected;
 
-  const Sport({this.id, this.logo, this.libelle, this.isSelected});
+  const Sport({this.id, this.logo, this.libelle});
 
   @override
-  List<Object> get props => [id, logo, libelle, isSelected];
+  List<Object> get props => [id, logo, libelle];
 
   static Sport fromMap(String id, Map<String, dynamic> map) {
-    return Sport(id: id, libelle: map["libelle"], logo: map["logo"], isSelected: false);
+    return Sport(id: id, libelle: map["libelle"], logo: map["logo"]);
   }
 
   Sport toIsSelected(bool isSelected) {
-    return Sport(id: id, logo: logo, libelle: libelle, isSelected: isSelected);
+    return Sport(id: id, logo: logo, libelle: libelle);
   }
 }

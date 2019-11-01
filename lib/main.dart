@@ -5,10 +5,18 @@ import 'package:programme_tv_multisport/src/widgets/widgets.dart';
 
 void main() {
   runApp(
-    BlocProvider(
-      builder: (BuildContext context) => SportBloc(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<SportBloc>(
+          builder: (BuildContext context) => SportBloc(),
+        ), 
+        BlocProvider<SportSelectedBloc>(
+          builder: (BuildContext context) => SportSelectedBloc(),
+        )
+      ],
       child: App(),
-    ),
+    )
+    ,
   );
 }
 
