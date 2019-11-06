@@ -12,6 +12,9 @@ void main() {
         ), 
         BlocProvider<SportSelectedBloc>(
           builder: (BuildContext context) => SportSelectedBloc(),
+        ),
+        BlocProvider<DateListBloc>(
+          builder: (BuildContext context) => DateListBloc(),
         )
       ],
       child: App(),
@@ -25,6 +28,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final _sportBloc = BlocProvider.of<SportBloc>(context);
     _sportBloc.add(GetSportList());
+    final _dateListBloc = BlocProvider.of<DateListBloc>(context);
+    _dateListBloc.add(GetDateList());
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

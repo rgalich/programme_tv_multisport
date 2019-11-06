@@ -8,4 +8,6 @@ class Repository {
   Future<List<Channel>> channelList() => _firestoreProvider.channelList();
 
   Future<List<Sport>> sportList() => _firestoreProvider.sportList();
+
+  Future<List<DateTime>> dateList() => _firestoreProvider.dateList();
 }

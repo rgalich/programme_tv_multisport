@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
+import 'package:programme_tv_multisport/src/dialogs/dialogs.dart';
 
 class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -32,9 +33,13 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
       ),
       backgroundColor: Color.fromRGBO(27, 119, 0, 1),
       actions: <Widget>[
-        Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Icon(Icons.calendar_today, color: Colors.white))
+        IconButton(
+          icon: Icon(Icons.calendar_today),
+          color: Colors.white,
+          onPressed: () {
+            calendar(context);
+          },
+        ),
       ],
     );
   }
