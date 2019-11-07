@@ -9,5 +9,5 @@ class Repository {
 
   Future<List<Sport>> sportList() => _firestoreProvider.sportList();
 
-  Future<List<DateTime>> dateList() => _firestoreProvider.dateList();
+  Future<DateTime> dateNow() => _firestoreProvider.dateNow();
 }

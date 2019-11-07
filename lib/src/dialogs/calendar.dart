@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
 
 void calendar(BuildContext context) {
@@ -52,7 +53,7 @@ void calendar(BuildContext context) {
                         DateTime date = state.dateList[index];
                         return ListTile(
                           dense: true,
-                          title: Text(date.toString()),
+                          title: Text(DateFormat('dd.M. EEEE', 'fr_FR').format(date).toUpperCase()),
                         );
                       },
                       itemCount: state.dateList.length,

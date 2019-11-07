@@ -27,17 +27,7 @@ class FirestoreProvider {
     return sportList;
   }
 
-  Future<List<DateTime>> dateList() async {
-    List<DateTime> dateList = new List<DateTime>();
-
-    final currentDate = Timestamp.now().toDate();
-    dateList.add(currentDate);
-
-    for (var i = 1; i <= 7; i++) {
-      dateList.add(currentDate.add(new Duration(days: i)));
-      dateList.add(currentDate.add(new Duration(days: i * -1)));
-    }
-
-    return dateList;
+  Future<DateTime> dateNow() async {
+    return DateFormat("yyyy-MM-dd").parse(Timestamp.now().toDate().toString());
   }
 }

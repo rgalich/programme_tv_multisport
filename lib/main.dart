@@ -2,24 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
 import 'package:programme_tv_multisport/src/widgets/widgets.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<SportBloc>(
-          builder: (BuildContext context) => SportBloc(),
-        ), 
-        BlocProvider<SportSelectedBloc>(
-          builder: (BuildContext context) => SportSelectedBloc(),
-        ),
-        BlocProvider<DateListBloc>(
-          builder: (BuildContext context) => DateListBloc(),
-        )
-      ],
-      child: App(),
-    )
-    ,
+  initializeDateFormatting("fr_FR", null).then(
+    (_) => runApp(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider<SportBloc>(
+            builder: (BuildContext context) => SportBloc(),
+          ),
+          BlocProvider<SportSelectedBloc>(
+            builder: (BuildContext context) => SportSelectedBloc(),
+          ),
+          BlocProvider<DateListBloc>(
+            builder: (BuildContext context) => DateListBloc(),
+          )
+        ],
+        child: App(),
+      ),
+    ),
   );
 }
 
@@ -35,10 +37,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        appBar: AppBarHome(),
-        drawer: DrawerHome()
-      ),
+      home: Scaffold(appBar: AppBarHome(), drawer: DrawerHome()),
     );
   }
 }
