@@ -17,6 +17,9 @@ void main() {
           ),
           BlocProvider<DateListBloc>(
             builder: (BuildContext context) => DateListBloc(),
+          ),
+          BlocProvider<DateSelectedBloc>(
+            builder: (BuildContext context) => DateSelectedBloc(),
           )
         ],
         child: App(),
@@ -32,6 +35,8 @@ class App extends StatelessWidget {
     _sportBloc.add(GetSportList());
     final _dateListBloc = BlocProvider.of<DateListBloc>(context);
     _dateListBloc.add(GetDateList());
+    final _dateSelectedBloc = BlocProvider.of<DateSelectedBloc>(context);
+    _dateSelectedBloc.add(DateNowSelected());
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

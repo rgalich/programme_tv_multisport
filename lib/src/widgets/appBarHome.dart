@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
 import 'package:programme_tv_multisport/src/dialogs/dialogs.dart';
 
@@ -28,7 +29,16 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
               return Text("data");
             },
           ),
-          Text('10.09.2019, MARDI', style: TextStyle(fontSize: 13))
+          BlocBuilder<DateSelectedBloc, DateSelectedState>(
+              builder: (BuildContext context, DateSelectedState state) {
+            if (state is DateSelectedLoaded) {
+              return Text(
+                  DateFormat('dd.M.yyyy, EEEE', 'fr_FR').format(state.date).toUpperCase(),
+                  style: TextStyle(fontSize: 13));
+            }
+
+            return Text("data");
+          }),
         ],
       ),
       backgroundColor: Color.fromRGBO(27, 119, 0, 1),

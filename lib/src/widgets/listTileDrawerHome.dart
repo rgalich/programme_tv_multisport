@@ -20,48 +20,49 @@ class ListTileDrawerHome extends StatelessWidget {
               ? Colors.grey.withOpacity(0.1)
               : Colors.white,
           child: ListTile(
-              key: Key(sport.id),
-              dense: true,
-              title: Row(
-                children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
-                    width: 20.0,
-                    child: new SvgPicture.asset('assets/${sport.logo}',
-                        color:
-                            state is SportSelectedLoaded && sport == state.sport
-                                ? Colors.black
-                                : Colors.grey,
-                        semanticsLabel: 'football'),
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    sport.libelle,
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight:
+            key: Key(sport.id),
+            dense: true,
+            title: Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 20.0,
+                  width: 20.0,
+                  child: new SvgPicture.asset('assets/${sport.logo}',
+                      color:
                           state is SportSelectedLoaded && sport == state.sport
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                      color: Colors.black.withOpacity(0.7),
-                    ),
-                  )
-                ],
-              ),
-              trailing: ClipRRect(
-                borderRadius: BorderRadius.circular(4.0),
-                child: Container(
-                  color: Colors.grey.withOpacity(0.5),
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  child: Text(
-                    '10',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                              ? Colors.black
+                              : Colors.grey,
+                      semanticsLabel: 'football'),
+                ),
+                SizedBox(width: 10.0),
+                Text(
+                  sport.libelle,
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight:
+                        state is SportSelectedLoaded && sport == state.sport
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                    color: Colors.black.withOpacity(0.7),
                   ),
+                )
+              ],
+            ),
+            trailing: ClipRRect(
+              borderRadius: BorderRadius.circular(4.0),
+              child: Container(
+                color: Colors.grey.withOpacity(0.5),
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                child: Text(
+                  '10',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              onTap: () {
-                _sportSelectedBloc.add(SportSelected(sport: sport));
-              }),
+            ),
+            onTap: () {
+              _sportSelectedBloc.add(SportSelected(sport: sport));
+            },
+          ),
         );
       }),
     );
