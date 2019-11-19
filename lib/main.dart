@@ -20,6 +20,16 @@ void main() {
           ),
           BlocProvider<DateSelectedBloc>(
             builder: (BuildContext context) => DateSelectedBloc(),
+          ),
+          BlocProvider<ChannelBloc>(
+            builder: (BuildContext context) => ChannelBloc(),
+          ),
+          BlocProvider<EventListBloc>(
+            builder: (BuildContext context) => EventListBloc(
+              dateSelectedBloc: BlocProvider.of<DateSelectedBloc>(context),
+              sportListBloc: BlocProvider.of<SportBloc>(context),
+              channelListBloc: BlocProvider.of<ChannelBloc>(context)
+            ),
           )
         ],
         child: App(),
@@ -33,6 +43,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final _sportBloc = BlocProvider.of<SportBloc>(context);
     _sportBloc.add(GetSportList());
+    final _channelBloc = BlocProvider.of<ChannelBloc>(context);
+    _channelBloc.add(GetChannelList());
     final _dateListBloc = BlocProvider.of<DateListBloc>(context);
     _dateListBloc.add(GetDateList());
     final _dateSelectedBloc = BlocProvider.of<DateSelectedBloc>(context);

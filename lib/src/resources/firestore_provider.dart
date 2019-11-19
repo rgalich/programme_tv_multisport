@@ -30,4 +30,18 @@ class FirestoreProvider {
   Future<DateTime> dateNow() async {
     return DateFormat("yyyy-MM-dd").parse(Timestamp.now().toDate().toString());
   }
+
+  Future<List<Event>> eventList(DateTime date, List<Sport> sportList, List<Channel> channelList) async {
+    List<Event> eventList = new List<Event>();
+
+    QuerySnapshot querySnapshot = await _firestore.collection("event")
+      .where('date', isGreaterThanOrEqualTo: date)
+      .where('date', isLessThan: date.add(new Duration(days: 1)))
+      .getDocuments();
+    querySnapshot.documents.forEach((document) {
+      eventList.add(Event.fromMap(document.documentID, sportList, channelList, document.data));
+    });
+
+    return eventList;
+  }
 }

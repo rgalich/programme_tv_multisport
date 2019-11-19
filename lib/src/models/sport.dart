@@ -13,8 +13,4 @@ class Sport extends Equatable {
   static Sport fromMap(String id, Map<String, dynamic> map) {
     return Sport(id: id, libelle: map["libelle"], logo: map["logo"]);
   }
-
-  Sport toIsSelected(bool isSelected) {
-    return Sport(id: id, logo: logo, libelle: libelle);
-  }
 }
