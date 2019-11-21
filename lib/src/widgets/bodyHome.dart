@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
 
@@ -15,7 +17,36 @@ class BodyHome extends StatelessWidget {
             Event event = state.eventList[index];
             return ListTile(
               key: Key(event.id),
-              title: Text(event.libelle),
+              title: Row(
+                children: <Widget>[
+                  SizedBox(
+                    height: 20.0,
+                    width: 20.0,
+                    child: SvgPicture.asset('assets/${event.sportLogo}',
+                        semanticsLabel: 'football'),
+                  ),
+                  SizedBox(width: 10.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        event.libelle,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        event.secondLibelle,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(DateFormat('Hm', 'fr_FR')
+                      .format(event.date)),
+                ],
+              ),
               dense: true,
             );
           },
