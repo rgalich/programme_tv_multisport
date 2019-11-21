@@ -13,6 +13,6 @@ class Repository {
   Future<DateTime> dateNow() => _firestoreProvider.dateNow();
 
   Future<List<Event>> eventList(DateTime date, List<Sport> sportList,
-          List<Channel> channelList) async =>
-      await _firestoreProvider.eventList(date, sportList, channelList);
+          List<Channel> channelList, Sport sport) async =>
+      await _firestoreProvider.eventList(date, sportList, channelList, sport);
 }

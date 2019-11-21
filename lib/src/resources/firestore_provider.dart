@@ -31,13 +31,19 @@ class FirestoreProvider {
     return DateFormat("yyyy-MM-dd").parse(Timestamp.now().toDate().toString());
   }
 
-  Future<List<Event>> eventList(DateTime date, List<Sport> sportList, List<Channel> channelList) async {
+  Future<List<Event>> eventList(DateTime date, List<Sport> sportList, List<Channel> channelList, Sport sport) async {
     List<Event> eventList = new List<Event>();
 
-    QuerySnapshot querySnapshot = await _firestore.collection("event")
+    Query query = _firestore.collection("event")
       .where('date', isGreaterThanOrEqualTo: date)
-      .where('date', isLessThan: date.add(new Duration(days: 1)))
-      .getDocuments();
+      .where('date', isLessThan: date.add(new Duration(days: 1)));
+
+    // if (sport != null) {
+    //   query = query.where('sportId', isEqualTo: sport.id);
+    // }
+
+    QuerySnapshot querySnapshot = await query.getDocuments();
+    
     querySnapshot.documents.forEach((document) {
       eventList.add(Event.fromMap(document.documentID, sportList, channelList, document.data));
     });

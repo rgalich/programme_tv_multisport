@@ -13,9 +13,15 @@ class GetEventList extends EventListEvent {
   final DateTime date;
   final List<Sport> sportList;
   final List<Channel> channelList;
+  final Sport sport;
 
-  const GetEventList({@required this.date, @required this.sportList, @required this.channelList}) : assert(date != null && sportList != null && channelList != null);
+  const GetEventList(
+      {@required this.date,
+      @required this.sportList,
+      @required this.channelList,
+      this.sport})
+      : assert(date != null && sportList != null && channelList != null);
 
   @override
-  List<Object> get props => [date, sportList, channelList];
+  List<Object> get props => [date, sportList, channelList, this.sport];
 }

@@ -14,35 +14,46 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
   StreamSubscription dateSelectedSubscription;
   final SportBloc sportListBloc;
   StreamSubscription sportListSubscription;
+  final SportSelectedBloc sportSelectedBloc;
+  StreamSubscription sportSelectedSubscription;
   final ChannelBloc channelListBloc;
   StreamSubscription channelListSubscription;
 
   EventListBloc(
       {@required this.dateSelectedBloc,
       @required this.sportListBloc,
-      @required this.channelListBloc}) {
+      @required this.channelListBloc,
+      @required this.sportSelectedBloc}) {
     DateTime date;
     List<Sport> sportList;
     List<Channel> channelList;
+    Sport sport;
 
     sportListSubscription = sportListBloc.listen((state) {
       if (state is SportListLoaded) {
         sportList = state.sportList;
-        callGetEventList(date, sportList, channelList);
+        callGetEventList(date, sportList, channelList, sport);
       }
     });
 
     channelListSubscription = channelListBloc.listen((state) {
       if (state is ChannelListLoaded) {
         channelList = state.channelList;
-        callGetEventList(date, sportList, channelList);
+        callGetEventList(date, sportList, channelList, sport);
       }
     });
 
     dateSelectedSubscription = dateSelectedBloc.listen((state) {
       if (state is DateSelectedLoaded) {
         date = state.date;
-        callGetEventList(date, sportList, channelList);
+        callGetEventList(date, sportList, channelList, sport);
+      }
+    });
+
+    sportSelectedSubscription = sportSelectedBloc.listen((state) {
+      if (state is SportSelectedLoaded) {
+        sport = state.sport;
+        callGetEventList(date, sportList, channelList, sport);
       }
     });
   }
@@ -58,7 +69,7 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
       yield EventListLoading();
       try {
         final eventList = await _repository.eventList(
-            event.date, event.sportList, event.channelList);
+            event.date, event.sportList, event.channelList, event.sport);
         yield EventListLoaded(eventList: eventList);
       } catch (_) {
         yield EventListError();
@@ -71,14 +82,18 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
     dateSelectedSubscription.cancel();
     sportListSubscription.cancel();
     channelListSubscription.cancel();
+    sportSelectedSubscription.cancel();
     return super.close();
   }
 
-  void callGetEventList(
-      DateTime date, List<Sport> sportList, List<Channel> channelList) {
+  void callGetEventList(DateTime date, List<Sport> sportList,
+      List<Channel> channelList, Sport sport) {
     if (date != null && sportList != null && channelList != null) {
       add(GetEventList(
-          date: date, sportList: sportList, channelList: channelList));
+          date: date,
+          sportList: sportList,
+          channelList: channelList,
+          sport: sport));
     }
   }
 }

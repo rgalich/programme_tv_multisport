@@ -28,7 +28,8 @@ void main() {
             builder: (BuildContext context) => EventListBloc(
               dateSelectedBloc: BlocProvider.of<DateSelectedBloc>(context),
               sportListBloc: BlocProvider.of<SportBloc>(context),
-              channelListBloc: BlocProvider.of<ChannelBloc>(context)
+              channelListBloc: BlocProvider.of<ChannelBloc>(context),
+              sportSelectedBloc: BlocProvider.of<SportSelectedBloc>(context)
             ),
           )
         ],
@@ -50,11 +51,11 @@ class App extends StatelessWidget {
     final _dateSelectedBloc = BlocProvider.of<DateSelectedBloc>(context);
     _dateSelectedBloc.add(DateNowSelected());
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Programme tv foot & multisport',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(appBar: AppBarHome(), drawer: DrawerHome()),
+      home: Scaffold(appBar: AppBarHome(), drawer: DrawerHome(), body: BodyHome()),
     );
   }
 }

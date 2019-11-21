@@ -11,6 +11,6 @@ class Channel extends Equatable {
   List<Object> get props => [id, picture, libelle];
 
   static Channel fromMap(String id, Map<String, dynamic> map) {
-    return Channel(id: id, libelle: map["libelle"], picture: map["image"]);
+    return Channel(id: id, libelle: map["libelle"], picture: map["picture"]);
   }
 }
