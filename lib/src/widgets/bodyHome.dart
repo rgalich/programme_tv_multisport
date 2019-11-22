@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,6 +42,7 @@ class BodyHome extends StatelessWidget {
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Image.file(event.mainChannelPicture),
                   Text(DateFormat('Hm', 'fr_FR')
                       .format(event.date)),
                 ],

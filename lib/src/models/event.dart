@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
@@ -5,7 +7,7 @@ import 'package:programme_tv_multisport/src/models/models.dart';
 class Event extends Equatable {
   final String id;
   final String sportLogo;
-  final String mainChannelPicture;
+  final File mainChannelPicture;
   final String secondChannelPicture;
   final DateTime date;
   final String libelle;
@@ -23,7 +25,7 @@ class Event extends Equatable {
       libelle: map['libelle'], 
       secondLibelle: map['secondLibelle'], 
       sportLogo: sportList.singleWhere((sport) => sport.id == map['sportId'])?.logo ,
-      mainChannelPicture: channelList.singleWhere((channel) => channel.id == map['mainChannelId'])?.picture,
+      mainChannelPicture: channelList.singleWhere((channel) => channel.id == map['mainChannelId'])?.file,
       secondChannelPicture: map['secondChannelId'] != null ? channelList.singleWhere((channel) => channel.id == map['secondChannelId'])?.picture : ''
     );
   }
