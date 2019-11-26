@@ -8,13 +8,14 @@ class StorageProvider {
 
   Future<Channel> downloadChannelPicture(Channel channel) async {
     Directory directory = await getApplicationDocumentsDirectory();
-    StorageReference storageReference = await _storage.getReferenceFromUrl('gs://programme-tv-multisport.appspot.com/${channel.fileName}');
-    File channelFile = File('${directory.path}/${channel.fileName}');
-    storageReference.writeToFile(channelFile);
-    if (!channelFile.existsSync()) {
-      await channelFile.create();
+    File pictureFile = File('${directory.path}/${channel.pictureName}');
+    
+    if (!pictureFile.existsSync()) {
+      StorageReference storageReference = await _storage.getReferenceFromUrl('gs://programme-tv-multisport.appspot.com/${channel.pictureName}');
+      storageReference.writeToFile(pictureFile);
+      await pictureFile.create();
     }
 
-    return channel.fromFile(channelFile);
+    return channel.copyWith(pictureFile: pictureFile);
   }
 }

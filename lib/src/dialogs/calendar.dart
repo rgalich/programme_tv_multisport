@@ -80,6 +80,7 @@ void calendar(BuildContext context) {
                                       ),
                                     ),
                                     onTap: () {
+                                      Navigator.of(context, rootNavigator: true).pop();
                                       _dateSelectedBloc
                                           .add(DateSelected(date: date));
                                     }),

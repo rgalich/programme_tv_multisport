@@ -8,7 +8,7 @@ class Event extends Equatable {
   final String id;
   final String sportLogo;
   final File mainChannelPicture;
-  final String secondChannelPicture;
+  final File secondChannelPicture;
   final DateTime date;
   final String libelle;
   final String secondLibelle;
@@ -25,8 +25,8 @@ class Event extends Equatable {
       libelle: map['libelle'], 
       secondLibelle: map['secondLibelle'], 
       sportLogo: sportList.singleWhere((sport) => sport.id == map['sportId'])?.logo ,
-      mainChannelPicture: channelList.singleWhere((channel) => channel.id == map['mainChannelId'])?.file,
-      secondChannelPicture: map['secondChannelId'] != null ? channelList.singleWhere((channel) => channel.id == map['secondChannelId'])?.picture : ''
+      mainChannelPicture: channelList.singleWhere((channel) => channel.id == map['mainChannelId'])?.pictureFile,
+      //secondChannelPicture: channelList.firstWhere((channel) => channel.id == map['secondChannelId'])?.pictureFile
     );
   }
 }

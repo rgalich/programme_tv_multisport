@@ -3,21 +3,20 @@ import 'package:equatable/equatable.dart';
 
 class Channel extends Equatable {
   final String id;
-  final String picture;
+  final String pictureName;
   final String libelle;
-  final String fileName;
-  final File file;
+  final File pictureFile;
 
-  const Channel({this.id, this.picture, this.libelle, this.fileName, this.file});
+  const Channel({this.id, this.pictureName, this.libelle, this.pictureFile});
 
   @override
-  List<Object> get props => [id, picture, libelle, fileName, file];
+  List<Object> get props => [id, pictureName, libelle, pictureFile];
 
   static Channel fromMap(String id, Map<String, dynamic> map) {
-    return Channel(id: id, libelle: map["libelle"], picture: map["picture"], fileName: map["fileName"]);
+    return Channel(id: id, libelle: map["libelle"], pictureName: map["fileName"]);
   }
 
-  Channel fromFile(File file) {
-    return Channel(id: id, libelle: libelle, picture: picture, fileName: fileName, file: file);
+  Channel copyWith({String id, String pictureName, String libelle, File pictureFile}) {
+    return Channel(id: id ?? this.id, pictureName: pictureName ?? this.pictureName, libelle: libelle ?? this.libelle, pictureFile: pictureFile ?? this.pictureFile);
   }
 }
