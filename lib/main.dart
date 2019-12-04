@@ -37,6 +37,10 @@ void main() {
             builder: (BuildContext context) => LoadingBloc(
                 eventListBloc: BlocProvider.of<EventListBloc>(context)),
           ),
+          BlocProvider<SportDrawerListBloc>(
+            builder: (BuildContext context) => SportDrawerListBloc(
+                sportListBloc: BlocProvider.of<SportBloc>(context)),
+          )
         ],
         child: App(),
       ),
