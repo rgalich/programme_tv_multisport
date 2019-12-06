@@ -29,13 +29,15 @@ class DrawerHome extends StatelessWidget {
                         fontSize: 12),
                   ),
                 ),
-                content: ListView.builder(
+                content: ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext contextSport, int indexSport) {
                     return ListTileDrawerHome(
-                        sport: state.sportDrawerList[index].sportList[indexSport]);
+                        sport:
+                            state.sportDrawerList[index].sportList[indexSport]);
                   },
+                  separatorBuilder: (BuildContext contextSport, int indexSport) => Divider(height: 0.5),
                   itemCount: state.sportDrawerList[index].sportList.length,
                 ),
               );
