@@ -28,14 +28,23 @@ class SportDrawerListBloc extends Bloc<SportDrawerListEvent, SportDrawerListStat
       yield SportDrawerListLoading();
       try {
         final List<SportDrawerList> sportDrawerList = new List<SportDrawerList>();
+        event.sportList.sort((a, b) => a.libelle.compareTo(b.libelle));
+        event.sportList.where((sport) => sport.order != null).toList();
+
+        List<Sport> sportList = event.sportList.where((sport) => sport.order != null).toList();
+        sportList.sort((a, b) => a.order.compareTo(b.order));
+
         sportDrawerList.add(new SportDrawerList(
           libelle: 'SPORTS POPULAIRES',
-          sportList: event.sportList.where((sport) => sport.order == null).toList()
+          sportList: sportList
         ));
+
+        sportList = event.sportList.where((sport) => sport.order == null).toList();
+        sportList.sort((a, b) => a.libelle.compareTo(b.libelle));
 
         sportDrawerList.add(new SportDrawerList(
           libelle: 'AUTRES SPORTES [A-Z]',
-          sportList: event.sportList.where((sport) => sport.order == null).toList()
+          sportList: sportList
         ));
           
         yield SportDrawerListLoaded(sportDrawerList: sportDrawerList);
