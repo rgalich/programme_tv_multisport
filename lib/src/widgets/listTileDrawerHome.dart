@@ -11,7 +11,6 @@ class ListTileDrawerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _sportSelectedBloc = BlocProvider.of<SportSelectedBloc>(context);
     return Container(
       child: BlocBuilder<SportSelectedBloc, SportSelectedState>(
           builder: (BuildContext context, SportSelectedState state) {
@@ -60,7 +59,9 @@ class ListTileDrawerHome extends StatelessWidget {
               ),
             ),
             onTap: () {
-              _sportSelectedBloc.add(SportSelected(sport: sport));
+              Navigator.of(context, rootNavigator: true).pop();
+              BlocProvider.of<SportSelectedBloc>(context)
+                  .add(SportSelected(sport: sport));
             },
           ),
         );

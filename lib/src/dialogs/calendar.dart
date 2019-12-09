@@ -8,7 +8,6 @@ void calendar(BuildContext context) {
       barrierColor: Colors.black.withOpacity(0.2),
       transitionBuilder: (context, a1, a2, widget) {
         final curvedValue = Curves.easeInOut.transform(a1.value) - 1.0;
-        final _dateSelectedBloc = BlocProvider.of<DateSelectedBloc>(context);
         return Transform(
           transform: Matrix4.translationValues(0.0, curvedValue * -200, 0.0),
           child: AlertDialog(
@@ -80,8 +79,9 @@ void calendar(BuildContext context) {
                                       ),
                                     ),
                                     onTap: () {
-                                      Navigator.of(context, rootNavigator: true).pop();
-                                      _dateSelectedBloc
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop();
+                                      BlocProvider.of<DateSelectedBloc>(context)
                                           .add(DateSelected(date: date));
                                     }),
                               );

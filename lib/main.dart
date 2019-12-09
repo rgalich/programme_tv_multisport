@@ -51,14 +51,10 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _sportBloc = BlocProvider.of<SportBloc>(context);
-    _sportBloc.add(GetSportList());
-    final _channelBloc = BlocProvider.of<ChannelBloc>(context);
-    _channelBloc.add(GetChannelList());
-    final _dateListBloc = BlocProvider.of<DateListBloc>(context);
-    _dateListBloc.add(GetDateList());
-    final _dateSelectedBloc = BlocProvider.of<DateSelectedBloc>(context);
-    _dateSelectedBloc.add(DateNowSelected());
+    BlocProvider.of<SportBloc>(context).add(GetSportList());
+    BlocProvider.of<ChannelBloc>(context).add(GetChannelList());
+    BlocProvider.of<DateListBloc>(context).add(GetDateList());
+    BlocProvider.of<DateSelectedBloc>(context).add(DateNowSelected());
     return MaterialApp(
       title: 'Programme tv foot & multisport',
       theme: ThemeData(
