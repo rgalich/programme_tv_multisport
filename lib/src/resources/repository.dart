@@ -1,10 +1,12 @@
 import 'package:programme_tv_multisport/src/models/models.dart';
+import './sqlite_provider.dart';
 import './storage_provider.dart';
 import './firestore_provider.dart';
 
 class Repository {
   final _firestoreProvider = FirestoreProvider();
   final _storageProvider = StorageProvider();
+  final _sqliteProvider = SqliteProvider();
 
   Future<List<Channel>> channelList() async {
     List<Channel> channelList = await _firestoreProvider.channelList();
@@ -16,7 +18,20 @@ class Repository {
     return channelWithPicture;
   }  
 
-  Future<List<Sport>> sportList() async => await _firestoreProvider.sportList();
+  Future<List<Sport>> sportList() async {
+    List<Sport> sportList = new List<Sport>();
+
+    sportList = await _sqliteProvider.getSportList();
+
+    if (sportList.length > 0) {
+      return sportList;
+    }
+
+    sportList = await _firestoreProvider.sportList();
+    await _sqliteProvider.insertSportList(sportList);
+
+    return sportList;
+  }
 
   Future<DateTime> dateNow() => _firestoreProvider.dateNow();
 

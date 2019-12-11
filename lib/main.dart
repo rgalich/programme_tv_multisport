@@ -12,33 +12,33 @@ void main() {
       MultiBlocProvider(
         providers: [
           BlocProvider<SportBloc>(
-            builder: (BuildContext context) => SportBloc(),
+            create: (BuildContext context) => SportBloc(),
           ),
           BlocProvider<SportSelectedBloc>(
-            builder: (BuildContext context) => SportSelectedBloc(),
+            create: (BuildContext context) => SportSelectedBloc(),
           ),
           BlocProvider<DateListBloc>(
-            builder: (BuildContext context) => DateListBloc(),
+            create: (BuildContext context) => DateListBloc(),
           ),
           BlocProvider<DateSelectedBloc>(
-            builder: (BuildContext context) => DateSelectedBloc(),
+            create: (BuildContext context) => DateSelectedBloc(),
           ),
           BlocProvider<ChannelBloc>(
-            builder: (BuildContext context) => ChannelBloc(),
+            create: (BuildContext context) => ChannelBloc(),
           ),
           BlocProvider<EventListBloc>(
-            builder: (BuildContext context) => EventListBloc(
+            create: (BuildContext context) => EventListBloc(
                 dateSelectedBloc: BlocProvider.of<DateSelectedBloc>(context),
                 sportListBloc: BlocProvider.of<SportBloc>(context),
                 channelListBloc: BlocProvider.of<ChannelBloc>(context),
                 sportSelectedBloc: BlocProvider.of<SportSelectedBloc>(context)),
           ),
           BlocProvider<LoadingBloc>(
-            builder: (BuildContext context) => LoadingBloc(
+            create: (BuildContext context) => LoadingBloc(
                 eventListBloc: BlocProvider.of<EventListBloc>(context)),
           ),
           BlocProvider<SportDrawerListBloc>(
-            builder: (BuildContext context) => SportDrawerListBloc(
+            create: (BuildContext context) => SportDrawerListBloc(
                 sportListBloc: BlocProvider.of<SportBloc>(context)),
           )
         ],
