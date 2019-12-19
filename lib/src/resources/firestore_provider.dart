@@ -5,10 +5,16 @@ import 'package:programme_tv_multisport/src/models/models.dart';
 class FirestoreProvider {
   final _firestore = Firestore.instance;
 
-  Future<List<Channel>> channelList() async {
+  Future<List<Channel>> channelList(DateTime lastUpdate) async {
     List<Channel> channelList = new List<Channel>();
 
-    QuerySnapshot querySnapshot = await _firestore.collection("channel").getDocuments();
+    Query query = _firestore.collection("channel");
+
+    if (lastUpdate != null) {
+      query = query.where('lastUpdate', isGreaterThan: lastUpdate);
+    }
+
+    QuerySnapshot querySnapshot = await query.getDocuments();
     querySnapshot.documents.forEach((document) {
       channelList.add(Channel.fromMap(document.documentID, document.data));
     });
@@ -16,10 +22,16 @@ class FirestoreProvider {
     return channelList;
   }
 
-  Future<List<Sport>> sportList() async {
+  Future<List<Sport>> sportList(DateTime lastUpdate) async {
     List<Sport> sportList = new List<Sport>();
 
-    QuerySnapshot querySnapshot = await _firestore.collection("sport").getDocuments();
+    Query query = _firestore.collection("sport");
+
+    if (lastUpdate != null) {
+      query = query.where('lastUpdate', isGreaterThan: lastUpdate);
+    }
+
+    QuerySnapshot querySnapshot = await query.getDocuments();
     querySnapshot.documents.forEach((document) {
       sportList.add(Sport.fromMap(document.documentID, document.data));
     });

@@ -9,7 +9,13 @@ class Repository {
   final _sqliteProvider = SqliteProvider();
 
   Future<List<Channel>> channelList() async {
-    List<Channel> channelList = await _firestoreProvider.channelList();
+    List<Channel> channelList = new List<Channel>();
+
+    channelList = await _sqliteProvider.getChannelList();
+
+    channelList.sort((b, a) => a.lastUpdate.compareTo(b.lastUpdate));
+    await _sqliteProvider.insertChannelList(await _firestoreProvider.channelList(channelList.length == 0 ? null : channelList.first.lastUpdate));
+  
     List<Channel> channelWithPicture = new List<Channel>();
 
     channelList.forEach((channel) async {
@@ -22,13 +28,11 @@ class Repository {
     List<Sport> sportList = new List<Sport>();
 
     sportList = await _sqliteProvider.getSportList();
+    
+    sportList.sort((b, a) => a.lastUpdate.compareTo(b.lastUpdate));
+    await _sqliteProvider.insertSportList(await _firestoreProvider.sportList(sportList.length == 0 ? null : sportList.first.lastUpdate));
 
-    if (sportList.length > 0) {
-      return sportList;
-    }
-
-    sportList = await _firestoreProvider.sportList();
-    await _sqliteProvider.insertSportList(sportList);
+    sportList = await _sqliteProvider.getSportList();
 
     return sportList;
   }
