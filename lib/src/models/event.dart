@@ -12,20 +12,39 @@ class Event extends Equatable {
   final DateTime date;
   final String libelle;
   final String secondLibelle;
-  
-  const Event({this.id, this.sportLogo, this.mainChannelPicture, this.secondChannelPicture, this.date, this.libelle, this.secondLibelle});
+
+  const Event(
+      {this.id,
+      this.sportLogo,
+      this.mainChannelPicture,
+      this.secondChannelPicture,
+      this.date,
+      this.libelle,
+      this.secondLibelle});
 
   @override
-  List<Object> get props => [id, sportLogo, mainChannelPicture, secondChannelPicture, date, libelle, secondLibelle];
+  List<Object> get props => [
+        id,
+        sportLogo,
+        mainChannelPicture,
+        secondChannelPicture,
+        date,
+        libelle,
+        secondLibelle
+      ];
 
-  static Event fromMap(String id, List<Sport> sportList, List<Channel> channelList, Map<String, dynamic> map) {
+  static Event fromMap(String id, List<Sport> sportList,
+      List<Channel> channelList, Map<String, dynamic> map) {
     return Event(
-      id: id, 
-      date: (map['date'] as Timestamp).toDate(), 
-      libelle: map['libelle'], 
-      secondLibelle: map['secondLibelle'], 
-      sportLogo: sportList.singleWhere((sport) => sport.id == map['sportId'])?.logo ,
-      mainChannelPicture: channelList.singleWhere((channel) => channel.id == map['mainChannelId'])?.pictureFile,
+      id: id,
+      date: (map['date'] as Timestamp).toDate(),
+      libelle: map['libelle'],
+      secondLibelle: map['secondLibelle'],
+      sportLogo:
+          sportList.singleWhere((sport) => sport.id == map['sportId'])?.logo,
+      mainChannelPicture: channelList
+          .singleWhere((channel) => channel.id == map['mainChannelId'])
+          ?.pictureFile,
       //secondChannelPicture: channelList.firstWhere((channel) => channel.id == map['secondChannelId'])?.pictureFile
     );
   }
