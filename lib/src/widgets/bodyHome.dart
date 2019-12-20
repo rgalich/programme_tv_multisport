@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
@@ -18,12 +17,12 @@ class BodyHome extends StatelessWidget {
               key: Key(event.id),
               title: Row(
                 children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
-                    width: 20.0,
-                    child: SvgPicture.asset('assets/${event.sportLogo}',
-                        semanticsLabel: 'football'),
-                  ),
+                  // SizedBox(
+                  //   height: 20.0,
+                  //   width: 20.0,
+                  //   child: SvgPicture.asset('assets/${event.sportLogo}',
+                  //       semanticsLabel: 'football'),
+                  // ),
                   SizedBox(width: 10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

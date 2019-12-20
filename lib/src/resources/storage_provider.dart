@@ -11,11 +11,24 @@ class StorageProvider {
     File pictureFile = File('${directory.path}/${channel.pictureName}');
     
     if (!pictureFile.existsSync()) {
-      StorageReference storageReference = await _storage.getReferenceFromUrl('gs://programme-tv-multisport.appspot.com/${channel.pictureName}');
+      StorageReference storageReference = await _storage.getReferenceFromUrl('gs://programme-tv-multisport.appspot.com/channel/${channel.pictureName}');
       storageReference.writeToFile(pictureFile);
       await pictureFile.create();
     }
 
     return channel.copyWith(pictureFile: pictureFile);
+  }
+
+  Future<Sport> downloadSportIcon(Sport sport) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    File logoFile = File('${directory.path}/${sport.logo}');
+    
+    if (!logoFile.existsSync()) {
+      StorageReference storageReference = await _storage.getReferenceFromUrl('gs://programme-tv-multisport.appspot.com/sport/${sport.logo}');
+      storageReference.writeToFile(logoFile);
+      await logoFile.create();
+    }
+
+    return sport.copyWith(logoFile: logoFile);
   }
 }

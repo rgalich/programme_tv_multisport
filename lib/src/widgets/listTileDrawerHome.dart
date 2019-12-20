@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
 
@@ -26,12 +25,11 @@ class ListTileDrawerHome extends StatelessWidget {
                 SizedBox(
                   height: 20.0,
                   width: 20.0,
-                  child: new SvgPicture.asset('assets/${sport.logo}',
+                  child: Image.file(sport.logoFile,
                       color:
                           state is SportSelectedLoaded && sport == state.sport
                               ? Colors.black
-                              : Colors.grey,
-                      semanticsLabel: 'football'),
+                              : Colors.grey),
                 ),
                 SizedBox(width: 10.0),
                 Text(

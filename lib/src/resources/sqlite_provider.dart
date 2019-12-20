@@ -7,7 +7,7 @@ class SqliteProvider {
 
   Future openDatabase() async {
     String databasesPath = await sqlite.getDatabasesPath();
-    String fullPath =  join(databasesPath, 'tele-sportifs.db');
+    String fullPath = join(databasesPath, 'tele-sportifs.db');
 
     this.db = await sqlite.openDatabase(fullPath, version: 1,
         onCreate: (sqlite.Database db, int version) async {
@@ -27,7 +27,13 @@ class SqliteProvider {
       for (Sport sport in sportList) {
         await txn.rawInsert(
             "INSERT INTO sport(id, libelle, logo, 'order', 'lastUpdate') VALUES(?, ?, ?, ?, ?)",
-            [sport.id, sport.libelle, sport.logo, sport.order, sport.lastUpdate.millisecondsSinceEpoch]);
+            [
+              sport.id,
+              sport.libelle,
+              sport.logo,
+              sport.order,
+              sport.lastUpdate.millisecondsSinceEpoch
+            ]);
       }
     });
   }
@@ -56,7 +62,12 @@ class SqliteProvider {
       for (Channel channel in channelList) {
         await txn.rawInsert(
             "INSERT INTO channel(id, libelle, pictureName, lastUpdate) VALUES(?, ?, ?, ?)",
-            [channel.id, channel.libelle, channel.pictureName, channel.lastUpdate]);
+            [
+              channel.id,
+              channel.libelle,
+              channel.pictureName,
+              channel.lastUpdate.millisecondsSinceEpoch
+            ]);
       }
     });
   }
