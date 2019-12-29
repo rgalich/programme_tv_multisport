@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
 
 class FirestoreProvider {
@@ -45,24 +44,32 @@ class FirestoreProvider {
   }
 
   Future<List<Event>> eventList(DateTime date, List<Sport> sportList,
-      List<Channel> channelList, Sport sport) async {
+      List<Channel> channelList, Sport sport, DateTime lastUpdate) async {
     List<Event> eventList = new List<Event>();
+    
+    Query query = _firestore.collection("event");
 
-    Query query = _firestore
-        .collection("event")
-        .where('date', isGreaterThanOrEqualTo: date)
-        .where('date', isLessThan: date.add(new Duration(days: 1)));
+    query = query
+        .where('shortDate', isEqualTo: date);
+
+    if (lastUpdate != null) {
+      query = query.where('lastUpdate', isGreaterThan: lastUpdate);
+    }
 
     if (sport != null) {
       query = query.where('sportId', isEqualTo: sport.id);
     }
 
-    QuerySnapshot querySnapshot = await query.getDocuments();
+    try {
+      QuerySnapshot querySnapshot = await query.getDocuments();
 
-    querySnapshot.documents.forEach((document) {
-      eventList.add(Event.fromMap(
-          document.documentID, sportList, channelList, document.data));
-    });
+      querySnapshot.documents.forEach((document) {
+        eventList.add(Event.fromMap(
+            document.documentID, sportList, channelList, document.data));
+      });
+    } catch (e) {
+      print(e);
+    }
 
     return eventList;
   }

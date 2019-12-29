@@ -15,6 +15,8 @@ class SqliteProvider {
           "CREATE TABLE sport (id STRING, logo STRING, libelle STRING, 'order' INTEGER, lastUpdate INTEGER)");
       await db.execute(
           "CREATE TABLE channel (id STRING, libelle STRING, pictureName STRING, lastUpdate INTEGER)");
+      await db.execute(
+          "CREATE TABLE event (id STRING, shortDate INTEGER, longDate INTEGER, isLive INTEGER, libelle STRING, secondLibelle STRING, mainChannelId STRING, secondChannelId STRING, sportId STRING, lastUpdate INTEGER)");
     });
   }
 
@@ -23,19 +25,20 @@ class SqliteProvider {
       await this.openDatabase();
     }
 
-    await this.db.transaction((txn) async {
-      for (Sport sport in sportList) {
-        await txn.rawInsert(
-            "INSERT INTO sport(id, libelle, logo, 'order', 'lastUpdate') VALUES(?, ?, ?, ?, ?)",
-            [
-              sport.id,
-              sport.libelle,
-              sport.logo,
-              sport.order,
-              sport.lastUpdate.millisecondsSinceEpoch
-            ]);
-      }
-    });
+    sqlite.Batch batch = db.batch();
+    for (Sport sport in sportList) {
+      batch.rawInsert(
+          "INSERT INTO sport(id, libelle, logo, 'order', 'lastUpdate') VALUES(?, ?, ?, ?, ?)",
+          [
+            sport.id,
+            sport.libelle,
+            sport.logo,
+            sport.order,
+            sport.lastUpdate.millisecondsSinceEpoch
+          ]);
+    }
+
+    await batch.commit(noResult: true);
   }
 
   Future<List<Sport>> getSportList() async {
@@ -58,18 +61,20 @@ class SqliteProvider {
       await this.openDatabase();
     }
 
-    await this.db.transaction((txn) async {
-      for (Channel channel in channelList) {
-        await txn.rawInsert(
-            "INSERT INTO channel(id, libelle, pictureName, lastUpdate) VALUES(?, ?, ?, ?)",
-            [
-              channel.id,
-              channel.libelle,
-              channel.pictureName,
-              channel.lastUpdate.millisecondsSinceEpoch
-            ]);
-      }
-    });
+    sqlite.Batch batch = db.batch();
+
+    for (Channel channel in channelList) {
+      batch.rawInsert(
+          "INSERT INTO channel(id, libelle, pictureName, lastUpdate) VALUES(?, ?, ?, ?)",
+          [
+            channel.id,
+            channel.libelle,
+            channel.pictureName,
+            channel.lastUpdate.millisecondsSinceEpoch
+          ]);
+    }
+
+    await batch.commit(noResult: true);
   }
 
   Future<List<Channel>> getChannelList() async {
@@ -89,5 +94,72 @@ class SqliteProvider {
 
   Future closeDatabase(sqlite.Database db) async {
     await db.close();
+  }
+
+  Future<List<Event>> getEventList(DateTime date, List<Sport> sportList,
+      List<Channel> channelList, Sport sport) async {
+    if (this.db == null) {
+      await this.openDatabase();
+    }
+
+    List<Map<String, dynamic>> mapList = sport != null
+        ? await this.db.rawQuery(
+            'SELECT * FROM event WHERE shortDate = ? AND sportId = ?',
+            [date.millisecondsSinceEpoch, sport.id])
+        : await this.db.rawQuery('SELECT * FROM event WHERE shortDate = ?',
+            [date.millisecondsSinceEpoch]);
+    List<Event> eventList = new List<Event>();
+    mapList.forEach((map) {
+      eventList.add(Event.fromMap(map['id'], sportList, channelList, map));
+    });
+
+    return eventList;
+  }
+
+  Future insertOrUpdateEventList(List<Event> eventList) async {
+    if (this.db == null) {
+      await this.openDatabase();
+    }
+
+    sqlite.Batch batch = db.batch();
+
+    for (Event event in eventList) {
+      int count = sqlite.Sqflite.firstIntValue(await db
+          .rawQuery('SELECT COUNT(*) FROM event WHERE id = ?', [event.id]));
+
+      if (count > 0) {
+        batch.rawUpdate(
+            "UPDATE event SET shortDate = ?, longDate = ?, isLive = ?, libelle = ?, secondLibelle = ?, mainChannelId = ?, secondChannelId = ?, sportId = ?, lastUpdate = ? WHERE id = ?",
+            [
+              event.shortDate.millisecondsSinceEpoch,
+              event.longDate.millisecondsSinceEpoch,
+              event.isLive,
+              event.libelle,
+              event.secondLibelle,
+              event.mainChannelId,
+              event.secondChannelId,
+              event.sportLogoId,
+              event.lastUpdate.millisecondsSinceEpoch,
+              event.id,
+            ]);
+      } else {
+        batch.rawInsert(
+            "INSERT INTO event(id, shortDate, longDate, isLive, libelle, secondLibelle, mainChannelId, secondChannelId, sportId, lastUpdate) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [
+              event.id,
+              event.shortDate.millisecondsSinceEpoch,
+              event.longDate.millisecondsSinceEpoch,
+              event.isLive,
+              event.libelle,
+              event.secondLibelle,
+              event.mainChannelId,
+              event.secondChannelId,
+              event.sportLogoId,
+              event.lastUpdate.millisecondsSinceEpoch
+            ]);
+      }
+    }
+
+    await batch.commit(noResult: true);
   }
 }

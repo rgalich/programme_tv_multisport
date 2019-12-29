@@ -6,46 +6,82 @@ import 'package:programme_tv_multisport/src/models/models.dart';
 
 class Event extends Equatable {
   final String id;
-  final String sportLogo;
+  final String sportLogoId;
+  final String mainChannelId;
+  final String secondChannelId;
+  final File sportLogoFile;
   final File mainChannelPicture;
   final File secondChannelPicture;
-  final DateTime date;
+  final DateTime longDate;
+  final DateTime shortDate;
   final String libelle;
   final String secondLibelle;
+  final bool isLive;
+  final DateTime lastUpdate;
 
   const Event(
       {this.id,
-      this.sportLogo,
+      this.sportLogoFile,
       this.mainChannelPicture,
       this.secondChannelPicture,
-      this.date,
+      this.longDate,
+      this.shortDate,
       this.libelle,
-      this.secondLibelle});
+      this.secondLibelle,
+      this.isLive,
+      this.sportLogoId,
+      this.mainChannelId,
+      this.secondChannelId,
+      this.lastUpdate});
 
   @override
   List<Object> get props => [
         id,
-        sportLogo,
+        sportLogoFile,
         mainChannelPicture,
         secondChannelPicture,
-        date,
+        longDate,
+        shortDate,
         libelle,
-        secondLibelle
+        secondLibelle,
+        isLive,
+        sportLogoId,
+        mainChannelId,
+        secondChannelId,
+        lastUpdate
       ];
 
   static Event fromMap(String id, List<Sport> sportList,
       List<Channel> channelList, Map<String, dynamic> map) {
     return Event(
-      id: id,
-      date: (map['date'] as Timestamp).toDate(),
-      libelle: map['libelle'],
-      secondLibelle: map['secondLibelle'],
-      sportLogo:
-          sportList.singleWhere((sport) => sport.id == map['sportId'])?.logo,
-      mainChannelPicture: channelList
-          .singleWhere((channel) => channel.id == map['mainChannelId'])
-          ?.pictureFile,
-      //secondChannelPicture: channelList.firstWhere((channel) => channel.id == map['secondChannelId'])?.pictureFile
-    );
+        id: id,
+        sportLogoId: map['sportId'],
+        mainChannelId: map['mainChannelId'],
+        secondChannelId: map['secondChannelId'],
+        longDate: map['longDate'] is Timestamp
+            ? map['longDate'].toDate()
+            : Timestamp.fromMillisecondsSinceEpoch(map['longDate']).toDate(),
+        shortDate: map['shortDate'] is Timestamp
+            ? map['shortDate'].toDate()
+            : Timestamp.fromMillisecondsSinceEpoch(map['shortDate']).toDate(),
+        libelle: map['libelle'],
+        secondLibelle: map['secondLibelle'],
+        isLive: map['isLive'] is bool
+            ? map['isLive']
+            : map['isLive'] == 1 ? true : false,
+        lastUpdate: map['lastUpdate'] is Timestamp
+            ? map['lastUpdate'].toDate()
+            : Timestamp.fromMillisecondsSinceEpoch(map['lastUpdate']).toDate(),
+        sportLogoFile: sportList
+            .singleWhere((sport) => sport.id == map['sportId'])
+            ?.logoFile,
+        mainChannelPicture: channelList
+            .singleWhere((channel) => channel.id == map['mainChannelId'])
+            ?.pictureFile,
+        secondChannelPicture: map['secondChannelId'] != null
+            ? channelList
+                .singleWhere((channel) => channel.id == map['secondChannelId'])
+                ?.pictureFile
+            : null);
   }
 }

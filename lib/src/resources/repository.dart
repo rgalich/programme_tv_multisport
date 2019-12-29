@@ -45,6 +45,16 @@ class Repository {
   Future<DateTime> dateNow() => _firestoreProvider.dateNow();
 
   Future<List<Event>> eventList(DateTime date, List<Sport> sportList,
-          List<Channel> channelList, Sport sport) async =>
-      await _firestoreProvider.eventList(date, sportList, channelList, sport);
+          List<Channel> channelList, Sport sport) async {
+    List<Event> eventList = new List<Event>();
+
+    eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport);
+
+    eventList.sort((b, a) => a.lastUpdate.compareTo(b.lastUpdate));
+    await _sqliteProvider.insertOrUpdateEventList(await _firestoreProvider.eventList(date, sportList, channelList, sport, eventList.length == 0 ? null : eventList.first.lastUpdate));
+
+    eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport);
+
+    return eventList;
+  }
 }
