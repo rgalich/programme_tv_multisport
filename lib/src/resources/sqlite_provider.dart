@@ -1,4 +1,5 @@
 import 'package:path/path.dart';
+import 'package:programme_tv_multisport/src/enums/broadcast.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
 import 'package:sqflite/sqflite.dart' as sqlite;
 
@@ -97,17 +98,27 @@ class SqliteProvider {
   }
 
   Future<List<Event>> getEventList(DateTime date, List<Sport> sportList,
-      List<Channel> channelList, Sport sport) async {
+      List<Channel> channelList, Sport sport, Broadcast broadcast) async {
     if (this.db == null) {
       await this.openDatabase();
     }
 
-    List<Map<String, dynamic>> mapList = sport != null
-        ? await this.db.rawQuery(
-            'SELECT * FROM event WHERE shortDate = ? AND sportId = ?',
-            [date.millisecondsSinceEpoch, sport.id])
-        : await this.db.rawQuery('SELECT * FROM event WHERE shortDate = ?',
-            [date.millisecondsSinceEpoch]);
+    String rawQuery = 'SELECT * FROM event WHERE shortDate = ?';
+    List<dynamic> rawQueryParam = new List<dynamic>();
+    rawQueryParam.add(date.millisecondsSinceEpoch);
+
+    if (sport != null) {
+      rawQuery = '$rawQuery AND sportId = ?';
+      rawQueryParam.add(sport.id);
+    }
+
+    if (broadcast != Broadcast.All) {
+      rawQuery = '$rawQuery AND isLive = ?';
+      rawQueryParam.add(broadcast == Broadcast.Live ? 1 : 0);
+    }
+
+    List<Map<String, dynamic>> mapList =
+        await this.db.rawQuery(rawQuery, rawQueryParam);
     List<Event> eventList = new List<Event>();
     mapList.forEach((map) {
       eventList.add(Event.fromMap(map['id'], sportList, channelList, map));

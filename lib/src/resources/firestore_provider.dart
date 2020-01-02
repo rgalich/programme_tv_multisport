@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:programme_tv_multisport/src/enums/broadcast.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
 
 class FirestoreProvider {
@@ -44,7 +45,7 @@ class FirestoreProvider {
   }
 
   Future<List<Event>> eventList(DateTime date, List<Sport> sportList,
-      List<Channel> channelList, Sport sport, DateTime lastUpdate) async {
+      List<Channel> channelList, Sport sport, Broadcast broadcast, DateTime lastUpdate) async {
     List<Event> eventList = new List<Event>();
     
     Query query = _firestore.collection("event");
@@ -58,6 +59,10 @@ class FirestoreProvider {
 
     if (sport != null) {
       query = query.where('sportId', isEqualTo: sport.id);
+    }
+
+    if (broadcast != Broadcast.All) {
+      query = query.where('isLive', isEqualTo: broadcast == Broadcast.Live ? true : false);
     }
 
     try {

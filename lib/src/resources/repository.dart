@@ -1,3 +1,4 @@
+import 'package:programme_tv_multisport/src/enums/broadcast.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
 import './sqlite_provider.dart';
 import './storage_provider.dart';
@@ -45,15 +46,15 @@ class Repository {
   Future<DateTime> dateNow() => _firestoreProvider.dateNow();
 
   Future<List<Event>> eventList(DateTime date, List<Sport> sportList,
-          List<Channel> channelList, Sport sport) async {
+          List<Channel> channelList, Sport sport, Broadcast broadcast) async {
     List<Event> eventList = new List<Event>();
 
-    eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport);
+    eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport, broadcast);
 
     eventList.sort((b, a) => a.lastUpdate.compareTo(b.lastUpdate));
-    await _sqliteProvider.insertOrUpdateEventList(await _firestoreProvider.eventList(date, sportList, channelList, sport, eventList.length == 0 ? null : eventList.first.lastUpdate));
+    await _sqliteProvider.insertOrUpdateEventList(await _firestoreProvider.eventList(date, sportList, channelList, sport, broadcast, eventList.length == 0 ? null : eventList.first.lastUpdate));
 
-    eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport);
+    eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport, broadcast);
 
     return eventList;
   }

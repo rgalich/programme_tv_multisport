@@ -26,20 +26,20 @@ void main() {
           BlocProvider<ChannelBloc>(
             create: (BuildContext context) => ChannelBloc(),
           ),
+          BlocProvider<BroadcastSelectedBloc>(
+            create: (BuildContext context) => BroadcastSelectedBloc(),
+          ),
           BlocProvider<EventListBloc>(
             create: (BuildContext context) => EventListBloc(
                 dateSelectedBloc: BlocProvider.of<DateSelectedBloc>(context),
                 sportListBloc: BlocProvider.of<SportBloc>(context),
                 channelListBloc: BlocProvider.of<ChannelBloc>(context),
-                sportSelectedBloc: BlocProvider.of<SportSelectedBloc>(context)),
+                sportSelectedBloc: BlocProvider.of<SportSelectedBloc>(context),
+                broadcastSelectedBloc: BlocProvider.of<BroadcastSelectedBloc>(context)),
           ),
           BlocProvider<LoadingBloc>(
             create: (BuildContext context) => LoadingBloc(
                 eventListBloc: BlocProvider.of<EventListBloc>(context)),
-          ),
-          BlocProvider<SportDrawerListBloc>(
-            create: (BuildContext context) => SportDrawerListBloc(
-                sportListBloc: BlocProvider.of<SportBloc>(context)),
           )
         ],
         child: App(),
@@ -61,22 +61,28 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-          appBar: AppBarHome(),
-          drawer: DrawerHome(),
-          body: BlocBuilder<LoadingBloc, LoadingState>(
-            builder: (BuildContext context, LoadingState state) {
-              if (state is LoadingHidden) {
-                SchedulerBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pop(context);
-                });
-              }
-              if (state is LoadingVisible) {
-                SchedulerBinding.instance
-                    .addPostFrameCallback((_) => loading(context));
-              }
-              return BodyHome();
-            },
-          )),
+        appBar: AppBarHome(),
+        drawer: BlocProvider<SportDrawerListBloc>(
+          create: (BuildContext context) => SportDrawerListBloc(
+              sportListBloc: BlocProvider.of<SportBloc>(context)),
+          child: DrawerHome(),
+        ),
+        body: BlocBuilder<LoadingBloc, LoadingState>(
+          builder: (BuildContext context, LoadingState state) {
+            if (state is LoadingHidden) {
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.pop(context);
+              });
+            }
+            if (state is LoadingVisible) {
+              SchedulerBinding.instance
+                  .addPostFrameCallback((_) => loading(context));
+            }
+            return BodyHome();
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBarHome(),
+      ),
     );
   }
 }
