@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:meta/meta.dart';
 import 'package:programme_tv_multisport/src/bloc/bloc.dart';
 import 'package:programme_tv_multisport/src/enums/broadcast.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
 import './bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:programme_tv_multisport/src/resources/repository.dart';
 
 class EventListBloc extends Bloc<EventListEvent, EventListState> {
@@ -101,7 +100,7 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
 
   void callGetEventList(DateTime date, List<Sport> sportList,
       List<Channel> channelList, Sport sport, Broadcast broadcast) {
-    if (date != null && sportList != null && channelList != null) {
+    if (date != null && sportList != null && channelList != null && sport != null) {
       add(GetEventList(
           date: date,
           sportList: sportList,

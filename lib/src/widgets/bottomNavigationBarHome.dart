@@ -16,17 +16,19 @@ class BottomNavigationBarHome extends StatelessWidget {
                   .add(BroadcastSelected(broadcast: Broadcast.values[index]));
           },
           elevation: 0.0,
+          backgroundColor: Colors.grey.withOpacity(0.1),
+          selectedItemColor: Colors.black,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.tv),
               title: Text('Tous'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.mail),
+              icon: Icon(Icons.live_tv),
               title: Text('Direct'),
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person), title: Text('Rediffusion'))
+                icon: Icon(Icons.replay), title: Text('Rediffusion'))
           ],
         );
       },

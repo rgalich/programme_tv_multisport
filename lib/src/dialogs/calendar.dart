@@ -95,7 +95,7 @@ void calendar(BuildContext context) {
                     );
                   }
 
-                  return Text("TOTO");
+                  return Text("");
                 },
               ),
             ),

@@ -28,7 +28,7 @@ class DrawerHome extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Text(
-                                'FlashResultats',
+                                'Programme Tv multisport',
                                 style:
                                     TextStyle(color: Colors.white, fontSize: 22),
                               ),
@@ -76,7 +76,7 @@ class DrawerHome extends StatelessWidget {
           ],);
         }
 
-        return Text('eee');
+        return Text('');
       }),
     );
   }

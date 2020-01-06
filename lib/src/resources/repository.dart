@@ -56,6 +56,8 @@ class Repository {
 
     eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport, broadcast);
 
+    eventList.sort((a, b) => a.longDate.compareTo(b.longDate));
+
     return eventList;
   }
 }

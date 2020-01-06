@@ -45,17 +45,17 @@ class ListTileDrawerHome extends StatelessWidget {
                 )
               ],
             ),
-            trailing: ClipRRect(
-              borderRadius: BorderRadius.circular(4.0),
-              child: Container(
-                color: Colors.grey.withOpacity(0.5),
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                child: Text(
-                  '10',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+            // trailing: ClipRRect(
+            //   borderRadius: BorderRadius.circular(4.0),
+            //   child: Container(
+            //     color: Colors.grey.withOpacity(0.5),
+            //     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            //     child: Text(
+            //       '10',
+            //       style: TextStyle(fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
             onTap: () {
               Navigator.of(context, rootNavigator: true).pop();
               BlocProvider.of<SportSelectedBloc>(context)

@@ -15,7 +15,7 @@ void main() {
             create: (BuildContext context) => SportBloc(),
           ),
           BlocProvider<SportSelectedBloc>(
-            create: (BuildContext context) => SportSelectedBloc(),
+            create: (BuildContext context) => SportSelectedBloc(sportListBloc: BlocProvider.of<SportBloc>(context)),
           ),
           BlocProvider<DateListBloc>(
             create: (BuildContext context) => DateListBloc(),
@@ -51,8 +51,8 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<SportBloc>(context).add(GetSportList());
     BlocProvider.of<ChannelBloc>(context).add(GetChannelList());
+    BlocProvider.of<SportBloc>(context).add(GetSportList());
     BlocProvider.of<DateListBloc>(context).add(GetDateList());
     BlocProvider.of<DateSelectedBloc>(context).add(DateNowSelected());
     return MaterialApp(

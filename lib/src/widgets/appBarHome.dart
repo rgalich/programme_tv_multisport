@@ -17,7 +17,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
           BlocBuilder<SportSelectedBloc, SportSelectedState>(
             builder: (BuildContext context, SportSelectedState state) {
               if (state is SportSelectedEmply) {
-                return Text("data");
+                return Text("");
               }
               if (state is SportSelectedLoaded) {
                 return Padding(
@@ -26,7 +26,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
                 );
               }
 
-              return Text("data");
+              return Text("");
             },
           ),
           BlocBuilder<DateSelectedBloc, DateSelectedState>(
@@ -37,7 +37,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
                   style: TextStyle(fontSize: 13));
             }
 
-            return Text("data");
+            return Text("");
           }),
         ],
       ),
