@@ -17,6 +17,7 @@ dependencies:
   path_provider: ^1.5.1
   sticky_headers: ^0.1.8+1
   sqflite: ^1.2.0
+  firebase_crashlytics: ^0.1.2+4
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
