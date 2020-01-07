@@ -12,7 +12,7 @@ class StorageProvider {
     
     if (!pictureFile.existsSync()) {
       StorageReference storageReference = await _storage.getReferenceFromUrl('gs://programme-tv-multisport.appspot.com/channel/${channel.pictureName}');
-      storageReference.writeToFile(pictureFile);
+      await storageReference.writeToFile(pictureFile).future;
       await pictureFile.create();
     }
 
@@ -25,7 +25,7 @@ class StorageProvider {
     
     if (!logoFile.existsSync()) {
       StorageReference storageReference = await _storage.getReferenceFromUrl('gs://programme-tv-multisport.appspot.com/sport/${sport.logo}');
-      storageReference.writeToFile(logoFile);
+      await storageReference.writeToFile(logoFile).future;
       await logoFile.create();
     }
 
