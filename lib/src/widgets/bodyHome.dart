@@ -78,25 +78,19 @@ class BodyHome extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(4.0),
                                 child: Container(
                                   width: 50.0,
-                                  color: Colors.redAccent,
+                                  color: event.isLive
+                                      ? Colors.redAccent
+                                      : Colors.blueGrey,
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5, vertical: 2),
                                   child: Column(
                                     children: <Widget>[
-                                      if (event.isLive)
-                                        Text(
-                                          'Direct',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        ),
-                                      if (!event.isLive)
-                                        Text(
-                                          'Rediff',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        ),
+                                      Text(
+                                        event.isLive ? 'Direct' : 'Rediff',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      )
                                     ],
                                   ),
                                 ),

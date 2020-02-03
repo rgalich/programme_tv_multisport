@@ -1,5 +1,5 @@
 enum Broadcast {
-  All,
   Live,
-  Replay
+  Replay,
+  All
 }

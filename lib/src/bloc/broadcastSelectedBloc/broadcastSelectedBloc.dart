@@ -5,7 +5,7 @@ import './bloc.dart';
 
 class BroadcastSelectedBloc extends Bloc<BroadcastSelectedEvent, BroadcastSelectedState> {
   @override
-  BroadcastSelectedState get initialState => BroadcastSelectedLoaded(broadcast: Broadcast.All);
+  BroadcastSelectedState get initialState => BroadcastSelectedLoaded(broadcast: Broadcast.Live);
 
   @override
   Stream<BroadcastSelectedState> mapEventToState(
