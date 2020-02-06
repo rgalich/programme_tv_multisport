@@ -43,7 +43,11 @@ class Repository {
     return sportList;
   }
 
-  Future<DateTime> dateNow() => _firestoreProvider.dateNow();
+  Future<DateTime> dateNow() async {
+    final date = _firestoreProvider.dateNow();
+    await _sqliteProvider.deleteEvent(date.add(new Duration(days: -8)));
+    return date;
+  }
 
   Future<List<Event>> eventList(DateTime date, List<Sport> sportList,
           List<Channel> channelList, Sport sport, Broadcast broadcast) async {

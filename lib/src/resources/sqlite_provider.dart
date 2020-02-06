@@ -21,6 +21,14 @@ class SqliteProvider {
     });
   }
 
+  Future deleteEvent(DateTime date) async {
+    if (this.db == null) {
+      await this.openDatabase();
+    }
+
+    await db.rawDelete('DELETE FROM event WHERE shortDate < ?', [date.millisecondsSinceEpoch]);
+  }
+
   Future insertSportList(List<Sport> sportList) async {
     if (this.db == null) {
       await this.openDatabase();

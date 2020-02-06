@@ -1,11 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:programme_tv_multisport/src/enums/broadcast.dart';
 import 'package:programme_tv_multisport/src/models/models.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreProvider {
   final _firestore = Firestore.instance;
 
+  Future signInAnonymously() async {
+    if (await FirebaseAuth.instance.currentUser() == null) {
+      await FirebaseAuth.instance.signInAnonymously();
+    }
+  }
+
   Future<List<Channel>> channelList(DateTime lastUpdate) async {
+    await signInAnonymously();
     List<Channel> channelList = new List<Channel>();
 
     Query query = _firestore.collection("channel");
@@ -23,6 +31,7 @@ class FirestoreProvider {
   }
 
   Future<List<Sport>> sportList(DateTime lastUpdate) async {
+    await signInAnonymously();
     List<Sport> sportList = new List<Sport>();
 
     Query query = _firestore.collection("sport");
@@ -39,19 +48,24 @@ class FirestoreProvider {
     return sportList;
   }
 
-  Future<DateTime> dateNow() async {
+  DateTime dateNow() {
     DateTime date = Timestamp.now().toDate();
     return DateTime(date.year, date.month, date.day);
   }
 
-  Future<List<Event>> eventList(DateTime date, List<Sport> sportList,
-      List<Channel> channelList, Sport sport, Broadcast broadcast, DateTime lastUpdate) async {
+  Future<List<Event>> eventList(
+      DateTime date,
+      List<Sport> sportList,
+      List<Channel> channelList,
+      Sport sport,
+      Broadcast broadcast,
+      DateTime lastUpdate) async {
+    await signInAnonymously();
     List<Event> eventList = new List<Event>();
-    
+
     Query query = _firestore.collection("event");
 
-    query = query
-        .where('shortDate', isEqualTo: date);
+    query = query.where('shortDate', isEqualTo: date);
 
     if (lastUpdate != null) {
       query = query.where('lastUpdate', isGreaterThan: lastUpdate);
@@ -62,7 +76,8 @@ class FirestoreProvider {
     }
 
     if (broadcast != Broadcast.All) {
-      query = query.where('isLive', isEqualTo: broadcast == Broadcast.Live ? true : false);
+      query = query.where('isLive',
+          isEqualTo: broadcast == Broadcast.Live ? true : false);
     }
 
     try {
