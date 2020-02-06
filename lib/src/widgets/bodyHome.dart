@@ -19,6 +19,7 @@ class BodyHome extends StatelessWidget {
                   children: <Widget>[
                     ListTile(
                       key: Key(event.id),
+                      contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
                       title: Row(
                         children: <Widget>[
                           SizedBox(
@@ -80,10 +81,10 @@ class BodyHome extends StatelessWidget {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(4.0),
                                 child: Container(
-                                  width: 50.0,
+                                  width: 52.0,
                                   color: event.isLive
                                       ? Colors.redAccent
-                                      : Colors.blueGrey,
+                                      : Colors.grey.withOpacity(0.8),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5, vertical: 2),
                                   child: Column(

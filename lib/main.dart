@@ -67,6 +67,7 @@ class App extends StatelessWidget {
       title: 'Programme tv foot & multisport',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Varela',
       ),
       home: BlocBuilder<EventListBloc, EventListState>(
         builder: (BuildContext context, EventListState state) {

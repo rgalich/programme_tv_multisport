@@ -16,7 +16,6 @@ class BottomNavigationBarHome extends StatelessWidget {
                 .add(BroadcastSelected(broadcast: Broadcast.values[index]));
           },
           elevation: 0.0,
-          
           backgroundColor: Colors.grey.withOpacity(0.1),
           selectedItemColor: Colors.black,
           items: [

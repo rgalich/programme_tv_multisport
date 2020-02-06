@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
                 width: 200.0,
               ),
               Text(
-                'Télé Sportive',
+                'TELE-SPORTS.FR',
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
