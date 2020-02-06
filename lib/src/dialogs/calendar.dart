@@ -65,7 +65,7 @@ void calendar(BuildContext context) {
                                 child: ListTile(
                                     dense: true,
                                     title: Text(
-                                      DateFormat('dd.M. EEEE', 'fr_FR')
+                                      DateFormat('dd.MM. EEEE', 'fr_FR')
                                           .format(date)
                                           .toUpperCase(),
                                       style: TextStyle(

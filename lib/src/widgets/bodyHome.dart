@@ -60,8 +60,11 @@ class BodyHome extends StatelessWidget {
                               if (event.secondChannelPicture != null)
                                 SizedBox(height: 5.0),
                               if (event.secondChannelPicture != null)
-                                Image.file(event.secondChannelPicture,
-                                    height: 20.0),
+                                Image.file(
+                                  event.secondChannelPicture,
+                                  height: 20.0,
+                                  width: 35.0,
+                                ),
                             ],
                           ),
                           VerticalDivider(),

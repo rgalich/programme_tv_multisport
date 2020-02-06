@@ -33,7 +33,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
               builder: (BuildContext context, DateSelectedState state) {
             if (state is DateSelectedLoaded) {
               return Text(
-                  DateFormat('dd.M.yyyy, EEEE', 'fr_FR').format(state.date).toUpperCase(),
+                  DateFormat('dd.MM.yyyy, EEEE', 'fr_FR').format(state.date).toUpperCase(),
                   style: TextStyle(fontSize: 13));
             }
 
