@@ -55,16 +55,16 @@ class BodyHome extends StatelessWidget {
                             children: <Widget>[
                               Image.file(
                                 event.mainChannelPicture,
-                                height: 20.0,
-                                width: 35.0,
+                                height: 21.5,
+                                width: 60.0,
                               ),
                               if (event.secondChannelPicture != null)
                                 SizedBox(height: 5.0),
                               if (event.secondChannelPicture != null)
                                 Image.file(
                                   event.secondChannelPicture,
-                                  height: 20.0,
-                                  width: 35.0,
+                                  height: 21.5,
+                                  width: 60.0,
                                 ),
                             ],
                           ),
@@ -120,8 +120,8 @@ class BodyHome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("Il n'y a pas d'événements pour ce sport aujourd'hui."),
-                Text("Veuillez sélectionner une autre date ou un autre sport.")
+                Text("Il n'y a pas d'événements pour ce sport aujourd'hui." , textAlign: TextAlign.center),
+                Text("Veuillez sélectionner une autre date ou un autre sport.", textAlign: TextAlign.center)
               ],
             ),
           );

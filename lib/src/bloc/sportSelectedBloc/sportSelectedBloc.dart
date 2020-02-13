@@ -13,7 +13,7 @@ class SportSelectedBloc extends Bloc<SportSelectedEvent, SportSelectedState> {
   SportSelectedBloc({@required this.sportListBloc}) {
     sportListSubscription = sportListBloc.listen((state) {
       if (state is SportListLoaded) {
-        add(SportSelected(sport: state.sportList[0]));
+        add(SportSelected(sport: state.sportList.firstWhere((sportElement) => sportElement.order == 1)));
       }
     });
   }
