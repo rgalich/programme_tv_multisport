@@ -55,6 +55,18 @@ class Repository {
 
     eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport, broadcast);
 
+    if (broadcast == Broadcast.All) {
+      if (eventList.where((event) => event.isLive).length == 0) {
+        await _sqliteProvider.insertOrUpdateEventList(await _firestoreProvider.eventList(date, sportList, channelList, sport, Broadcast.Live, null));
+      }
+
+      if (eventList.where((event) => !event.isLive).length == 0) {
+        await _sqliteProvider.insertOrUpdateEventList(await _firestoreProvider.eventList(date, sportList, channelList, sport, Broadcast.Replay, null));
+      }
+    }
+
+    eventList = await _sqliteProvider.getEventList(date, sportList, channelList, sport, broadcast);
+
     eventList.sort((b, a) => a.lastUpdate.compareTo(b.lastUpdate));
     await _sqliteProvider.insertOrUpdateEventList(await _firestoreProvider.eventList(date, sportList, channelList, sport, broadcast, eventList.length == 0 ? null : eventList.first.lastUpdate));
 
